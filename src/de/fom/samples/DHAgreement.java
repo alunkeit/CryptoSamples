@@ -1,7 +1,7 @@
 /**
- * 
+ * Only for demonstration purposes
  */
-package de.fom.inf;
+package de.fom.samples;
 
 import java.io.IOException;
 import java.math.BigInteger;
@@ -16,13 +16,15 @@ import javax.crypto.KeyAgreement;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.DHParameterSpec;
 
+import org.apache.log4j.Logger;
+
 /**
  * @author alunk
  * 
  *         This class demonstrates the DH key agreement
- *
  */
-public class DHAgreement {
+public class DHAgreement
+{
 
 	private static final String dhG14 = "FFFFFFFF FFFFFFFF C90FDAA2 2168C234 C4C6628B 80DC1CD1"
 			+ "29024E08 8A67CC74 020BBEA6 3B139B22 514A0879 8E3404DD"
@@ -39,7 +41,10 @@ public class DHAgreement {
 
 	private KeyPair kp;
 
-	public DHAgreement() {
+	private static Logger _logger = Logger.getLogger(DHAgreement.class);
+
+	public DHAgreement()
+	{
 
 	}
 
@@ -50,7 +55,8 @@ public class DHAgreement {
 	 * @throws GeneralSecurityException
 	 * @throws IOException
 	 */
-	public void generateParameters(int strength) throws GeneralSecurityException, IOException {
+	public void generateParameters(int strength) throws GeneralSecurityException, IOException
+	{
 
 		AlgorithmParameterGenerator algGen = AlgorithmParameterGenerator.getInstance("DH", "BCFIPS");
 
@@ -64,26 +70,26 @@ public class DHAgreement {
 
 		spec = dsaParams.getParameterSpec(DHParameterSpec.class);
 
-		System.out.println("P: " + spec.getP());
-		System.out.println("G: " + spec.getG());
+		_logger.info("Modulus P: " + spec.getP());
+		_logger.info("Generator G: " + spec.getG());
 	}
 
 	/**
-	 * This function demonstrates how to construct the DH parameter spec from a
-	 * given specification. This implementation makes use of DH goup 14 as specified
-	 * in RFC 3526
+	 * This function demonstrates how to construct the DH parameter spec from a given specification. This implementation
+	 * makes use of DH goup 14 as specified in RFC 3526
 	 * 
 	 * @return
 	 */
-	public void generateG14Spec() {
+	public void generateG14Spec()
+	{
 
 		BigInteger modulus = new BigInteger(dhG14.replaceAll("\\s", ""), 16);
 		BigInteger generator = BigInteger.TWO;
 
 		spec = new DHParameterSpec(modulus, generator);
 
-		System.out.println("P: " + spec.getP());
-		System.out.println("G: " + spec.getG());
+		_logger.info("Modulus P: " + spec.getP());
+		_logger.info("Generator G: " + spec.getG());
 	}
 
 	/**
@@ -93,7 +99,8 @@ public class DHAgreement {
 	 * @return
 	 * @throws GeneralSecurityException
 	 */
-	public void generateKeyPair() throws GeneralSecurityException {
+	public void generateKeyPair() throws GeneralSecurityException
+	{
 		KeyPairGenerator keyPair = KeyPairGenerator.getInstance("DH", "BCFIPS");
 
 		keyPair.initialize(spec);
@@ -104,13 +111,13 @@ public class DHAgreement {
 	/**
 	 * Does the key agreement. Used by Alice and Bob.
 	 * 
-	 * @param initiatorPrivate - The private key used in the computation of the
-	 *                         shared secret
+	 * @param initiatorPrivate - The private key used in the computation of the shared secret
 	 * @param recipientPublic
 	 * @return
 	 * @throws GeneralSecurityException
 	 */
-	public byte[] computeSharedSecret(PublicKey recipientPublic) throws GeneralSecurityException {
+	public byte[] computeSharedSecret(PublicKey recipientPublic) throws GeneralSecurityException
+	{
 		KeyAgreement agreement = KeyAgreement.getInstance("DH", "BCFIPS");
 
 		agreement.init(kp.getPrivate());
@@ -122,7 +129,13 @@ public class DHAgreement {
 		return agreedKey.getEncoded();
 	}
 
-	public PublicKey getPublic() {
+	/**
+	 * Returns the public key for the use with DH
+	 * 
+	 * @return
+	 */
+	public PublicKey getPublic()
+	{
 		return kp.getPublic();
 	}
 
