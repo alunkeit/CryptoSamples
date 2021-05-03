@@ -5,6 +5,11 @@ package de.fom.samples;
 
 import java.math.BigInteger;
 
+/**
+ * 
+ * @author alunkeit
+ *
+ */
 public class MathHelper
 {
 

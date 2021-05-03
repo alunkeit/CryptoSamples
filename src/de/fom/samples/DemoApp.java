@@ -16,7 +16,7 @@ import org.apache.log4j.PatternLayout;
 import org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider;
 
 /**
- * @author alunk
+ * @author alunkeit
  *
  */
 public class DemoApp

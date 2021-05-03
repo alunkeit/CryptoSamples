@@ -19,7 +19,7 @@ import javax.crypto.spec.DHParameterSpec;
 import org.apache.log4j.Logger;
 
 /**
- * @author alunk
+ * @author alunkeit
  * 
  *         This class demonstrates the DH key agreement
  */

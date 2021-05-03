@@ -9,7 +9,7 @@ import javax.crypto.spec.SecretKeySpec;
 import org.apache.log4j.Logger;
 
 /**
- * @author alunk
+ * @author alunkeit
  *
  *         A very simple example of an AES encryptor
  */
