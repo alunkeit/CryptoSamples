@@ -138,6 +138,8 @@ public class DemoApp
 			X509Certificate ee = certGen.generateV3EndEntity(ca, kpCA.getPrivate(), kpClient.getPublic(), "hack.me",
 					364);
 
+			_logger.info(ee.toString());
+
 			Utils.write2File("./client.cer", ee.getEncoded());
 			Utils.write2File("./client.key", kpClient.getPrivate().getEncoded());
 
@@ -198,13 +200,14 @@ public class DemoApp
 		{
 			Security.addProvider(new BouncyCastleFipsProvider());
 
-			DemoApp.demonstrateDH();
-
-			DemoApp.demonstrateAES();
-
+			// DemoApp.demonstrateDH();
+			/*
+			 * DemoApp.demonstrateAES();
+			 */
 			DemoApp.demonstrateCertGeneration();
-
-			DemoApp.demonstrateDigitalSignature();
+			/*
+			 * DemoApp.demonstrateDigitalSignature();
+			 */
 
 		}
 		catch (Exception e)
