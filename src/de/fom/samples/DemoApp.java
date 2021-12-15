@@ -8,11 +8,11 @@ import java.security.KeyPair;
 import java.security.Security;
 import java.security.Signature;
 import java.security.cert.X509Certificate;
+import java.util.logging.ConsoleHandler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PatternLayout;
 import org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider;
 
 /**
@@ -22,17 +22,15 @@ import org.bouncycastle.jcajce.provider.BouncyCastleFipsProvider;
 public class DemoApp
 {
 
-	private static Logger _logger = Logger.getRootLogger();
+	private static Logger _logger = Logger.getLogger(DemoApp.class.toString());
 
 	static
 	{
-		_logger.setLevel(Level.DEBUG);
+		_logger.setLevel(Level.ALL);
 
-		// Define log pattern layout
-		PatternLayout layout = new PatternLayout("%m%n");
-
-		// Add console appender to root logger
-		_logger.addAppender(new ConsoleAppender(layout));
+		ConsoleHandler handler = new ConsoleHandler();
+		handler.setFormatter(new SimpleFormatter());
+		_logger.addHandler(handler);
 	}
 
 	/**
@@ -200,14 +198,13 @@ public class DemoApp
 		{
 			Security.addProvider(new BouncyCastleFipsProvider());
 
-			// DemoApp.demonstrateDH();
-			/*
-			 * DemoApp.demonstrateAES();
-			 */
+			DemoApp.demonstrateDH();
+
+			DemoApp.demonstrateAES();
+
 			DemoApp.demonstrateCertGeneration();
-			/*
-			 * DemoApp.demonstrateDigitalSignature();
-			 */
+
+			DemoApp.demonstrateDigitalSignature();
 
 		}
 		catch (Exception e)

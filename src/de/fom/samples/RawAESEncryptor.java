@@ -3,10 +3,10 @@
  */
 package de.fom.samples;
 
+import java.util.logging.Logger;
+
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
-
-import org.apache.log4j.Logger;
 
 /**
  * @author alunkeit
@@ -18,7 +18,7 @@ public class RawAESEncryptor
 
 	private byte[] secretKey;
 
-	private static Logger _logger = Logger.getLogger(RawAESEncryptor.class);
+	private static Logger _logger = Logger.getLogger(RawAESEncryptor.class.toString());
 
 	public RawAESEncryptor(byte[] secret) throws IllegalArgumentException
 	{

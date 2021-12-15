@@ -11,12 +11,11 @@ import java.security.GeneralSecurityException;
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
 import java.security.PublicKey;
+import java.util.logging.Logger;
 
 import javax.crypto.KeyAgreement;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.DHParameterSpec;
-
-import org.apache.log4j.Logger;
 
 /**
  * @author alunkeit
@@ -41,7 +40,7 @@ public class DHAgreement
 
 	private KeyPair kp;
 
-	private static Logger _logger = Logger.getLogger(DHAgreement.class);
+	private static Logger _logger = Logger.getLogger(DHAgreement.class.toString());
 
 	public DHAgreement()
 	{

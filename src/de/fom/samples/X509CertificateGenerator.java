@@ -14,10 +14,10 @@ import java.security.PublicKey;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.util.Date;
+import java.util.logging.Logger;
 
 import javax.security.auth.x500.X500Principal;
 
-import org.apache.log4j.Logger;
 import org.bouncycastle.asn1.x500.X500Name;
 import org.bouncycastle.asn1.x509.BasicConstraints;
 import org.bouncycastle.asn1.x509.Extension;
@@ -41,7 +41,7 @@ public class X509CertificateGenerator
 
 	private static long ONE_DAY = 1000L * 60 * 60 * 24;
 
-	org.apache.log4j.Logger _logger = Logger.getLogger(X509CertificateGenerator.class);
+	Logger _logger = Logger.getLogger(X509CertificateGenerator.class.toString());
 
 	/**
 	 * Generates an RSA key pair
@@ -127,7 +127,7 @@ public class X509CertificateGenerator
 	public X509Certificate generateV3EndEntity(X509Certificate ca, PrivateKey caPrivKey, PublicKey pub, String subject,
 			long validityPeriod) throws IOException, GeneralSecurityException, OperatorException
 	{
-		_logger.debug("Generating End entity certificate");
+		_logger.fine("Generating End entity certificate");
 
 		long time = System.currentTimeMillis();
 
@@ -139,7 +139,7 @@ public class X509CertificateGenerator
 				new X500Principal("CN=" + subject), // subject
 				pub); // subject public key
 
-		_logger.debug("adding extensions");
+		_logger.fine("adding extensions");
 
 		JcaX509ExtensionUtils extUtils = new JcaX509ExtensionUtils();
 		v3CertBldr.addExtension(Extension.subjectKeyIdentifier, false, extUtils.createSubjectKeyIdentifier(pub));
@@ -152,11 +152,11 @@ public class X509CertificateGenerator
 
 		v3CertBldr.addExtension(Extension.basicConstraints, false, new BasicConstraints(false));
 
-		_logger.debug("Finished adding extensions");
+		_logger.fine("Finished adding extensions");
 
 		JcaContentSignerBuilder signerBuilder = new JcaContentSignerBuilder("SHA256withRSA").setProvider("BCFIPS");
 
-		_logger.debug("now signing the certificate template");
+		_logger.fine("now signing the certificate template");
 
 		return new JcaX509CertificateConverter().setProvider("BCFIPS")
 				.getCertificate(v3CertBldr.build(signerBuilder.build(caPrivKey)));
